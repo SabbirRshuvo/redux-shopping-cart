@@ -1,6 +1,14 @@
+import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 
 const Navbar = () => {
+  const carts = useSelector((state) => state.carts);
+  console.log(carts);
+  const totalCarts = carts.reduce(
+    (total, product) => total + product.quantity,
+    0
+  );
+
   return (
     <div className="navbar bg-base-100 container mx-auto">
       <div className="flex-1">
@@ -29,7 +37,9 @@ const Navbar = () => {
                 />{" "}
               </svg>
 
-              <span className="badge badge-sm indicator-item">0</span>
+              <span className="badge badge-sm indicator-item">
+                {totalCarts}{" "}
+              </span>
             </div>
           </div>
           <div
@@ -37,8 +47,10 @@ const Navbar = () => {
             className="card card-compact dropdown-content bg-base-100 z-1 mt-3 w-52 shadow"
           >
             <div className="card-body">
-              <span className="text-lg font-bold">0 Items</span>
-              <span className="text-info">Subtotal: $0</span>
+              <span className="text-lg font-bold">
+                {carts.length > 0 ? carts.length : 0} Items
+              </span>
+              <span className="text-info">Subtotal: $ 0</span>
               <div className="card-actions">
                 <Link to="/cart" className="btn btn-primary btn-block">
                   View cart
